@@ -1,0 +1,152 @@
+# Trimmed example of `helm template` output for an access-node chart with every service.
+---
+# Source: access-node/charts/access-node/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: desmos
+spec:
+  ports:
+    - port: 8080
+---
+---
+# Source: access-node/charts/access-node/charts/desmos/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: desmos
+spec:
+  template:
+    spec:
+      initContainers:
+        - name: wait-for-db
+          image: busybox:1.36
+      containers:
+        - name: desmos
+          image: in2workspace/in2-desmos-api:v1.4.2
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dlt-adapter-alastria
+spec:
+  template:
+    spec:
+      containers:
+        - name: dlt-adapter-alastria
+          image: quay.io/digitelts/dlt-adapter:2.1.0
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: postgis
+spec:
+  template:
+    spec:
+      containers:
+        - name: postgis
+          image: postgis/postgis:16-3.4
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: scorpio
+spec:
+  template:
+    spec:
+      containers:
+        - name: scorpio
+          image: scorpiobroker/all-in-one-runner:java-4.1.11
+        - name: log-shipper
+          image: fluent/fluent-bit:3.0
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tmforum-api
+spec:
+  template:
+    spec:
+      containers:
+        - name: party-catalog
+          image: quay.io/fiware/party-catalog:1.3.6
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata: {name: customer-bill-management}
+spec: {template: {spec: {containers: [{name: customer-bill-management, image: "quay.io/fiware/customer-bill-management:1.3.6"}]}}}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata: {name: customer-management}
+spec: {template: {spec: {containers: [{name: customer-management, image: "quay.io/fiware/customer-management:1.3.6"}]}}}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata: {name: product-catalog}
+spec: {template: {spec: {containers: [{name: product-catalog, image: "quay.io/fiware/product-catalog:1.3.6"}]}}}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata: {name: product-inventory}
+spec: {template: {spec: {containers: [{name: product-inventory, image: "quay.io/fiware/product-inventory:1.3.6"}]}}}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata: {name: product-ordering-management}
+spec: {template: {spec: {containers: [{name: product-ordering-management, image: "quay.io/fiware/product-ordering-management:1.3.6"}]}}}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata: {name: resource-catalog}
+spec: {template: {spec: {containers: [{name: resource-catalog, image: "quay.io/fiware/resource-catalog:1.3.6"}]}}}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata: {name: resource-function-activation}
+spec: {template: {spec: {containers: [{name: resource-function-activation, image: "quay.io/fiware/resource-function-activation:1.3.6"}]}}}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata: {name: resource-inventory}
+spec: {template: {spec: {containers: [{name: resource-inventory, image: "quay.io/fiware/resource-inventory:1.3.6"}]}}}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata: {name: service-catalog}
+spec: {template: {spec: {containers: [{name: service-catalog, image: "quay.io/fiware/service-catalog:1.3.6"}]}}}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata: {name: service-inventory}
+spec: {template: {spec: {containers: [{name: service-inventory, image: "quay.io/fiware/service-inventory:1.3.6"}]}}}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata: {name: account}
+spec: {template: {spec: {containers: [{name: account, image: "quay.io/fiware/account:1.3.6"}]}}}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata: {name: agreement}
+spec: {template: {spec: {containers: [{name: agreement, image: "quay.io/fiware/agreement:1.3.6"}]}}}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata: {name: party-role}
+spec: {template: {spec: {containers: [{name: party-role, image: "quay.io/fiware/party-role:1.3.6"}]}}}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata: {name: usage-management}
+spec: {template: {spec: {containers: [{name: usage-management, image: "quay.io/fiware/usage-management:1.3.6"}]}}}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata: {name: quote}
+spec: {template: {spec: {containers: [{name: quote, image: "quay.io/fiware/quote:1.3.6"}]}}}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata: {name: document-management}
+spec: {template: {spec: {containers: [{name: document-management, image: "quay.io/fiware/document-management:1.3.6"}]}}}

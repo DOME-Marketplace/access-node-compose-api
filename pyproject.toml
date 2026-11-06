@@ -1,0 +1,42 @@
+[project]
+name = "access-node-compose-api"
+dynamic = ["version"]
+description = "Serves the container image versions of a DOME access-node environment, read from dome-gitops."
+readme = "README.md"
+license = "Apache-2.0"
+license-files = ["LICENSE"]
+requires-python = ">=3.13"
+dependencies = [
+    "fastapi>=0.115",
+    "pydantic-settings>=2.6",
+    "pyyaml>=6.0.2",
+    "uvicorn>=0.32",
+]
+
+[dependency-groups]
+dev = [
+    "httpx2>=2.16",
+    "pytest>=8.3",
+    "ruff>=0.8",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.version]
+path = "src/access_node_compose_api/__init__.py"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/access_node_compose_api"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py313"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "SIM", "RUF"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"
